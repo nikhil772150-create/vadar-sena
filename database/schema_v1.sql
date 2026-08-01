@@ -1,0 +1,2 @@
+-- PostgreSQL schema script placeholder for BVSMS v1.0
+-- Migrations will be managed via Django ORM in Phase 2

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: bvsms_prod_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-bvsms_db}
+      POSTGRES_USER: ${DB_USER:-bvsms_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-bvsms_secure_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: bvsms_prod_backend
+    restart: always
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - SECRET_KEY=${SECRET_KEY:-bvsms-prod-secure-key-bhartiyavadar-2026}
+      - DEBUG=False
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-bhartiyavadar.com,www.bhartiyavadar.com,localhost,127.0.0.1}
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=${DB_NAME:-bvsms_db}
+      - DB_USER=${DB_USER:-bvsms_user}
+      - DB_PASSWORD=${DB_PASSWORD:-bvsms_secure_password}
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bvsms_prod_frontend
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+      - static_volume:/app/staticfiles:ro
+      - media_volume:/app/media:ro
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

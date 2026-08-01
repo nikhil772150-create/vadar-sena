@@ -1,0 +1,1 @@
+# BVSMS Django Applications package

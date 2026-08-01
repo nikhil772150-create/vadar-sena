@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Space Grotesk', 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: #090d16;
+    color: #f8fafc;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ea580c;
+}
+
+/* Custom UI Tokens */
+.bvs-card {
+  background: linear-gradient(180deg, rgba(19, 25, 39, 0.9) 0%, rgba(13, 17, 28, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bvs-card-hover:hover {
+  border-color: rgba(234, 88, 12, 0.4);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px 0 rgba(234, 88, 12, 0.12);
+  transform: translateY(-3px);
+}
+
+.bvs-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #fba518 45%, #ea580c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bvs-gradient-text-crimson {
+  background: linear-gradient(135deg, #f8fafc 0%, #f43f5e 50%, #be123c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bvs-glow-saffron {
+  box-shadow: 0 4px 25px -3px rgba(234, 88, 12, 0.35);
+}
+
+.bvs-glow-crimson {
+  box-shadow: 0 4px 25px -3px rgba(190, 18, 60, 0.35);
+}
+
+/* Subtle Animated Background Mesh */
+.bvs-bg-pattern {
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(234, 88, 12, 0.1) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(190, 18, 60, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 90%, rgba(15, 23, 42, 0.9) 0px, transparent 100%);
+}
