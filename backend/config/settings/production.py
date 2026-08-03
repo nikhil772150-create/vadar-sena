@@ -1,12 +1,10 @@
 from .base import *
 import os
-from django.core.exceptions import ImproperlyConfigured
 
 DEBUG = False
 
-# Production Allowed Hosts
-default_hosts = 'bhartiyavadar.com,www.bhartiyavadar.com,localhost,127.0.0.1'
-ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', default_hosts).split(',') if host.strip()]
+# Production Allowed Hosts - allow all hosts (Render domains, custom domain bhartiyavadar.com, localhost)
+ALLOWED_HOSTS = ['*']
 
 # Database configuration
 DATABASES = {
@@ -20,14 +18,11 @@ DATABASES = {
     }
 }
 
-# CORS Allowed Origins
-default_cors = 'https://bhartiyavadar.com,https://www.bhartiyavadar.com,http://localhost:5173,http://localhost:5174,http://127.0.0.1:8000'
-CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', default_cors).split(',') if origin.strip()]
+# CORS Configuration for Production
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-if not SECRET_KEY or SECRET_KEY == 'django-insecure-default-bvsms-key':
-    # Fallback to dev secret key if not specified, but log warning
-    SECRET_KEY = os.getenv('SECRET_KEY', 'bvsms-prod-secure-key-bhartiyavadar-2026')
+SECRET_KEY = os.getenv('SECRET_KEY', 'bvsms-prod-secure-key-bhartiyavadar-2026')
 
 # Production Security Controls
 SECURE_BROWSER_XSS_FILTER = True
